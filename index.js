@@ -12,7 +12,7 @@ import userRoutes from './routes/user.js';
 import recipeRoutes from './routes/recipe.js';
 
 // set port
-const PORT = process.env.PORT || 5009;
+const PORT = process.env.PORT || 5002;
 
 // Construct path
 const __filename = fileURLToPath(import.meta.url);
