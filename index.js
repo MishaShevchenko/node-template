@@ -21,19 +21,26 @@ app.use(express.static(path.join(PATH, 'public')));
 createUserTable();
 createRecipeTable();
 
-// Используйте маршруты без базовых путей
 app.use('/recipes', recipeRoutes);
 app.use('/users', userRoutes);
+
+app.get('/', (req, res) => {
+    res.send('Welcome to the Home Page!');
+});
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
 
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).json({ message: 'Internal Server Error' });
 });
 
-app.use('*', (req, res) => {
+app.use((req, res, next) => {
     res.status(404).json({ message: 'Page is not found' });
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is up and running on port : ${PORT}`);
+    console.log(`Server is up and running on port: ${PORT}`);
 });
