@@ -6,6 +6,7 @@ import createUserTable from './models/user.js';
 import createRecipeTable from './models/recipe.js';
 import userRoutes from './routes/user.js';
 import recipeRoutes from './routes/recipe.js';
+import { verifyToken } from './middleware/verifyToken.js';
 
 const PORT = process.env.PORT || 5002;
 const __filename = fileURLToPath(import.meta.url);
@@ -21,12 +22,9 @@ app.use(express.static(path.join(PATH, 'public')));
 createUserTable();
 createRecipeTable();
 
-app.use('/recipes', recipeRoutes);
-app.use('/users', userRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/recipes', recipeRoutes);
 
-app.get('/', (req, res) => {
-    res.send('Welcome to the Home Page!');
-});
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
